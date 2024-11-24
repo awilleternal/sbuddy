@@ -1,7 +1,7 @@
 <h3>recent activity</h3>
 {%for m in room_messages%}
 
-<div><small>@{{m.user}}{{m.created|timesince}}</small>
+<div><small><a href="{%url 'user-profile' m.user.id%}">@{{m.user}}</a>{{m.created|timesince}}</small>
 <small>replied to"{{m.room}}"</small>
 <p>{{m.body}}</p></div>
 {%if request.user == m.user%}
