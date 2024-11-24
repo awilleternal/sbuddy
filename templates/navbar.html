@@ -1,0 +1,13 @@
+<a href="/"><h1>logo</h1></a>
+<form method="GET" action="{%url 'home'%}">
+    <input type="text" placeholder="search room" name="q"><!-- because of the q that is present as name and q=input text  
+    when home page searches for q vale then we grt input text that we typed-->
+    
+</form>
+{%if request.user.is_authenticated%}
+<p>hello {{request.user}}</p>
+<a href="{% url 'logout'%}">logout</a>
+{%else%}
+<a href="{% url 'login'%}">login</a>
+{%endif%}
+<hr>
