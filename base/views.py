@@ -123,11 +123,17 @@ def deleteRoom(request,pk):
     return render(request,'base/delete.html',{'obj':room})
 
 def deleteMsg(request,pk):
+    
     msg=message.objects.get(id=pk)
+    room=msg.room
     if request.user != msg.user:
         return HttpResponse("you are not user")
     if request.method =='POST':
         msg.delete()
+        user_in_room=message.objects.filter(room=room,user=msg.user).exists()
+        if not user_in_room:
+            room.participants.remove(msg.user)
+        
         return redirect('home')
     
     return render(request,'base/delete.html',{'obj':msg})
