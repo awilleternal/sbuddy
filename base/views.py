@@ -64,8 +64,9 @@ def home(request):#req object is http object what is user sending to bacend
     rooms=Room.objects.filter(Q(topic__name__icontains=q)
                               |Q(name__icontains=q) |  Q(description__icontains=q))#this finds __name refers to first it goes to room.topic then it goes to topic.name thsi does it by applying join internally on room and table  
     topics=Topic.objects.all()
+    room_messages=message.objects.filter(Q(room__topic__name__icontains=q))
     r_c=rooms.count()
-    context={'rooms':rooms,'topics':topics,'r_c':r_c}
+    context={'rooms':rooms,'topics':topics,'r_c':r_c,'room_messages':room_messages}
     return render(request,'base/home.html',context)
     
 def room(request,pk):
