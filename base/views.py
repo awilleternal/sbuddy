@@ -8,7 +8,7 @@ from django.contrib.auth.forms import UserCreationForm
 from django.contrib import messages
 from django.db.models import Q
 from .models import Room,Topic,message
-from .forms import RoomForm,messageForm
+from .forms import RoomForm,messageForm,userForm
 # Create your views here.
 # rooms=[
 #     {'id':1,'name':'z'},
@@ -170,3 +170,15 @@ def updateMsg(request,pk):
             return redirect('home')
     context={'form':form}
     return render(request,'base/room_form.html',context)
+@login_required(login_url='login')
+def updateUser(request):
+    user=request.user
+    form=userForm(instance=user)
+    if request.method =='POST':
+        form=userForm(request.POST,instance=user)
+        if form.is_valid():
+            form.save()
+            return redirect('user-profile',pk=user.id)
+    
+    return render(request,'base/update-user.html',{'form':form})
+    
