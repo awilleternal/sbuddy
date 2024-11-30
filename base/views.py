@@ -63,7 +63,7 @@ def home(request):#req object is http object what is user sending to bacend
     #Q allows us to do to perform & and | on qurries bscially it searches query avaliABE IN EVERYTHING
     rooms=Room.objects.filter(Q(topic__name__icontains=q)
                               |Q(name__icontains=q) |  Q(description__icontains=q))#this finds __name refers to first it goes to room.topic then it goes to topic.name thsi does it by applying join internally on room and table  
-    topics=Topic.objects.all()
+    topics=Topic.objects.all()[0:5]
     room_messages=message.objects.filter(Q(room__topic__name__icontains=q))
     r_c=rooms.count()
     context={'rooms':rooms,'topics':topics,'r_c':r_c,'room_messages':room_messages}
@@ -182,3 +182,11 @@ def updateUser(request):
     
     return render(request,'base/update-user.html',{'form':form})
     
+def topicPage(request):
+    q=request.GET.get('q') if request.GET.get('q') != None else ''
+    topics=Topic.objects.filter(name__icontains=q)
+    return render(request,'base/topics.html',{'topics':topics})
+
+def activityPage(request):
+    room_messages=message.objects.all()
+    return render(request,'base/activity.html',{'room_messages':room_messages})

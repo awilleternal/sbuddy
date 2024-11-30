@@ -14,7 +14,8 @@ urlpatterns = [
     path('delete-msg/<str:pk>',views.deleteMsg,name='delete-msg'),
     path('update-msg/<str:pk>',views.updateMsg,name='update-msg'),
     path('update-user/',views.updateUser,name='update-user'),
-
+    path('topics/',views.topicPage,name='topics'),
+    path('activity/',views.activityPage,name='activity'),
     
     
     
